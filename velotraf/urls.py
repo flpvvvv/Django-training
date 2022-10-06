@@ -15,7 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+import velogest.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('ma_vue/', velogest.views.ma_vue),
 ]
