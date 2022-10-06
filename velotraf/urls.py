@@ -14,10 +14,11 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-import velogest.views
+from django.urls import path, include
+from velogest.views import home
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('ma_vue/', velogest.views.ma_vue),
+    path('', home, name="home"),
+    path('velogest/', include('velogest.urls')),
 ]

@@ -19,3 +19,6 @@ class Sensor(models.Model):
         ],
         default="T1"
     )
+
+    def __str__(self):
+        return self.name

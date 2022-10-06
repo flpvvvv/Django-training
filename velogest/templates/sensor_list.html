@@ -1,0 +1,10 @@
+<h1>Sensor list</h1>
+{% if sensors %}
+    <ul>
+    {% for sensor in sensors %}
+        <li>{{ sensor }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No sensors !</p>
+{% endif %}
