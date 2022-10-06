@@ -1,10 +1,10 @@
 <h1>Sensor list</h1>
 {% if sensors %}
-    <ul>
+<ul>
     {% for sensor in sensors %}
-        <li>{{ sensor }}</li>
+    <li><a href="{% url 'velogest:sensor_id' pk=sensor.id %}">{{ sensor }}</a></li>
     {% endfor %}
-    </ul>
+</ul>
 {% else %}
-    <p>No sensors !</p>
+<p>No sensors !</p>
 {% endif %}

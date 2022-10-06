@@ -28,10 +28,7 @@ class SensorViewID(View):
         # print(sensor_name)
         sensor = Sensor.objects.get(pk=pk)
         context = {
-            "sensor_name": sensor.name,
-            "sensor_type": sensor.type,
-            "latitude": sensor.latitude,
-            "longitude": sensor.longitude,
+            "sensor": sensor
         }
         return render(request, 'sensor_detail.html', context)
 
@@ -41,10 +38,7 @@ class SensorView(View):
         # print(sensor_name)
         sensor = Sensor.objects.get(name=sensor_name)
         context = {
-            "sensor_name": sensor.name,
-            "sensor_type": sensor.type,
-            "latitude": sensor.latitude,
-            "longitude": sensor.longitude,
+            "sensor": sensor
         }
         return render(request, 'sensor_detail.html', context)
         # return HttpResponseRedirect(resolve_url('velogest:sensor', sensor_name))
