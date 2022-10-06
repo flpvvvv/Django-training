@@ -8,7 +8,8 @@ from django.shortcuts import resolve_url
 
 
 def home(request):
-    return HttpResponse("Home page")
+    # return HttpResponse("Home page")
+    return HttpResponseRedirect(resolve_url('velogest:list'))
 
 
 def velogest_home(request):

@@ -1,4 +1,19 @@
-<h1>Sensor {{ sensor.name }}</h1>
-<p>Sensor type: {{ sensor.type }}</p>
-<p>latitude: {{ sensor.latitude }}</p>
-<p>longitude: {{ sensor.longitude }}</p>
+{% extends "base.html" %}
+
+{% block page_title %}Senor : {{ sensor.name }} {%endblock %}
+
+{% block content %}
+<dl>
+    <dt>Name</dt>
+    <dd>{{ sensor.name }}</dd>
+    <dt>Type</dt>
+    <dd>{{ sensor.get_type_display }}</dd>
+    <dt>Position</dt>
+    <dd>{{ sensor.latitude }} {{ sensor.longitude }}</dd>
+    <dt>Created at</dt>
+    <dd>{{ sensor.created_at }}</dd>
+</dl>
+
+<a href="{% url 'velogest:list' %}">Go back to sensor list</a>
+
+{% endblock content %}

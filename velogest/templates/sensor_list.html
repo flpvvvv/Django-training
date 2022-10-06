@@ -1,4 +1,10 @@
-<h1>Sensor list</h1>
+{% extends "base.html" %}
+
+{% block page_title %}Sensor List{% endblock %}
+
+
+{% block content %}
+
 {% if sensors %}
 <ul>
     {% for sensor in sensors %}
@@ -8,3 +14,5 @@
 {% else %}
 <p>No sensors !</p>
 {% endif %}
+
+{% endblock content %}
