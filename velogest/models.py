@@ -14,14 +14,20 @@ class Sensor(models.Model):
         choices=[
             ("T1", "type 1"),
             ("T2", "type 2"),
+            ("T3", "type 3"),
         ],
-        default="T1"
+        default="T2"
+    )
+    owers = models.ManyToManyField(
+        'auth.User', related_name='gestion')
+    campaign = models.ForeignKey(
+        'velogest.Campaign', related_name='campaign', on_delete=models.SET_NULL, null=True, blank=True
     )
 
     def __str__(self):
         return self.name
 
 
-class Compaign(models.Model):
+class Campaign(models.Model):
     start_day = models.DateField()
     end_day = models.DateField()
