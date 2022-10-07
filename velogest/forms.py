@@ -2,6 +2,7 @@
 from django import forms
 
 from velogest.models import Sensor
+from django.core.exceptions import ValidationError
 
 
 # class SensorForm(forms.Form):
@@ -19,3 +20,13 @@ class SensorForm(forms.ModelForm):
     class Meta:
         model = Sensor
         fields = '__all__'
+
+    # def __init__(self, *args, **kwargs):
+    #     super().__init__(*args, **kwargs)
+    #     self.fields["name"] = "sensor"
+
+    # def clean(self):
+    #     data = super().clean()
+    #     if data["latitude"] > 1000:
+    #         self.add_error("latitude", ValidationError(
+    #             "invalide value", code="invalide"))

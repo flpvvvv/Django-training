@@ -52,3 +52,14 @@ def sensor(request):
         form.save()
         return HttpResponseRedirect(resolve_url('velogest:list'))
     return render(request, 'sensor.html', {'form': form})
+
+
+
+def modify_sensor(request, pk):
+    sensor = Sensor.objects.get(pk=pk)
+    form = SensorForm(request.POST or None,instance=sensor)
+    if form.is_valid():
+        form.save()
+        return HttpResponseRedirect(resolve_url('velogest:list'))
+    return render(request, 'sensor.html', {'form': form})
+
