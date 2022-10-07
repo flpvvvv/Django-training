@@ -4,6 +4,7 @@ from django.views import View
 from velogest.models import Sensor
 from velogest.forms import SensorForm
 from django.shortcuts import resolve_url
+from django.views.generic import DeleteView
 
 # Create your views here.
 
@@ -54,12 +55,16 @@ def sensor(request):
     return render(request, 'sensor.html', {'form': form})
 
 
-
 def modify_sensor(request, pk):
     sensor = Sensor.objects.get(pk=pk)
-    form = SensorForm(request.POST or None,instance=sensor)
+    form = SensorForm(request.POST or None, instance=sensor)
     if form.is_valid():
         form.save()
         return HttpResponseRedirect(resolve_url('velogest:list'))
     return render(request, 'sensor.html', {'form': form})
 
+
+class DeleteSensor(DeleteView):
+    model = Sensor
+    template_name = "sensor_deleted.html"
+    success_url = "/"
