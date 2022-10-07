@@ -18,7 +18,7 @@ class Sensor(models.Model):
         ],
         default="T2"
     )
-    owers = models.ManyToManyField(
+    owners = models.ManyToManyField(
         'auth.User', related_name='gestion')
     campaign = models.ForeignKey(
         'velogest.Campaign', related_name='campaign', on_delete=models.SET_NULL, null=True, blank=True

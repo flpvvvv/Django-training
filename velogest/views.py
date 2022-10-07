@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import View
 from velogest.models import Sensor
-from velogest.forms import SensorForm
+from velogest.forms import SensorForm, FilterForm
 from django.shortcuts import resolve_url
 from django.views.generic import DeleteView
 from django.contrib import messages
@@ -23,9 +23,27 @@ def velogest_home(request):
 
 def sensor_list(request):
     sensors = Sensor.objects.all()
+    form = FilterForm(request.GET or None)
+    if form.is_valid():
+        # print(form.cleaned_data)
+        data = form.cleaned_data
+        name = data.get("name")
+        campaign = data.get("campaign")
+        owners = data.get("owners")
+        print(name, campaign, owners)
+
+        if name:
+            sensors = sensors.filter(name__icontains=name)
+        if campaign:
+            sensors = sensors.filter(campaign=campaign)
+        if owners:
+            sensors = sensors.filter(owners=owners)
+
     context = {
-        "sensors": sensors
+        "sensors": sensors,
+        "form": form,
     }
+
     return render(request, 'sensor_list.html', context)
 
 

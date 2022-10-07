@@ -4,7 +4,11 @@
 
 
 {% block content %}
-
+<form action="" method="get">
+    {{ form }}
+    <button type="submit" class="btn btn-primary">Search</button>
+    <a href="{% url 'velogest:list' %}" class="btn btn-primary">Cancel</a>
+</form>
 {% if sensors %}
 <ul>
     {% for sensor in sensors %}
