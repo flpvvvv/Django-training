@@ -20,3 +20,8 @@ class Sensor(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Compaign(models.Model):
+    start_day = models.DateField()
+    end_day = models.DateField()

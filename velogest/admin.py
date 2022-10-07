@@ -1,5 +1,5 @@
 from django.contrib import admin
-from velogest.models import Sensor
+from velogest.models import Sensor, Compaign
 
 # Register your models here.
 
@@ -10,4 +10,9 @@ class SensorAdmin(admin.ModelAdmin):
     list_filter = ['type']
 
 
+class CompaignAdmin(admin.ModelAdmin):
+    list_display = ['start_day', 'end_day']
+
+
 admin.site.register(Sensor, SensorAdmin)
+admin.site.register(Compaign, CompaignAdmin)
