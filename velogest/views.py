@@ -2,6 +2,7 @@ from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.views import View
 from velogest.models import Sensor
+from velogest.forms import SensorForm
 from django.shortcuts import resolve_url
 
 # Create your views here.
@@ -43,3 +44,11 @@ class SensorView(View):
         }
         return render(request, 'sensor_detail.html', context)
         # return HttpResponseRedirect(resolve_url('velogest:sensor', sensor_name))
+
+
+def sensor(request):
+    form = SensorForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return HttpResponseRedirect(resolve_url('velogest:list'))
+    return render(request, 'sensor.html', {'form': form})
