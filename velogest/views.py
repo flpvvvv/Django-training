@@ -25,12 +25,10 @@ def sensor_list(request):
     sensors = Sensor.objects.all()
     form = FilterForm(request.GET or None)
     if form.is_valid():
-        # print(form.cleaned_data)
         data = form.cleaned_data
         name = data.get("name")
         campaign = data.get("campaign")
         owners = data.get("owners")
-        print(name, campaign, owners)
 
         if name:
             sensors = sensors.filter(name__icontains=name)
@@ -38,6 +36,13 @@ def sensor_list(request):
             sensors = sensors.filter(campaign=campaign)
         if owners:
             sensors = sensors.filter(owners=owners)
+
+        if data.get('created_at_after'):
+            sensors = sensors.filter(
+                created_at__date__gte=data.get('created_at_after'))
+        if data.get('created_at_before'):
+            sensors = sensors.filter(
+                created_at__date__lte=data.get('created_at_before'))
 
     context = {
         "sensors": sensors,

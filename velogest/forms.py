@@ -30,3 +30,5 @@ class FilterForm(forms.Form):
     name = forms.CharField(label="Search by sensor name", required=False)
     campaign = forms.ModelChoiceField(Campaign.objects.all(), required=False)
     owners = forms.ModelChoiceField(User.objects.all(), required=False)
+    created_at_after = forms.DateField(required=False)
+    created_at_before = forms.DateField(required=False)

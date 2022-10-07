@@ -1,11 +1,11 @@
 {% extends "base.html" %}
-
+{% load bootstrap5 %}
 {% block page_title %}Sensor List{% endblock %}
 
 
 {% block content %}
 <form action="" method="get">
-    {{ form }}
+    {% bootstrap_form form layout='horizontal' %}
     <button type="submit" class="btn btn-primary">Search</button>
     <a href="{% url 'velogest:list' %}" class="btn btn-primary">Cancel</a>
 </form>
