@@ -2,7 +2,13 @@
 
 {% load bootstrap5 %}
 
-{% block page_title %}Sensor{% endblock %}
+{% block page_title %}
+{% if form.instance.pk %}
+    Modify sensor {{ form.instance.name }}
+{% else %}
+    Add sensor
+{% endif %}
+{% endblock %}
 
 
 {% block content %}

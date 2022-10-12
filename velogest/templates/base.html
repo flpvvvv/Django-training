@@ -1,3 +1,4 @@
+{% load bootstrap5 %}
 <!doctype html>
 <html lang="en">
 
@@ -35,6 +36,7 @@
     </nav>
     <div class="container">
         <h1>{% block page_title %}{% endblock %}</h1>
+        {% bootstrap_messages %}
         {% block content %}{% endblock %}
     </div>
 

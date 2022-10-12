@@ -7,6 +7,7 @@ from velogest.forms import SensorForm, FilterForm
 from django.shortcuts import resolve_url
 from django.views.generic import DeleteView
 from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
 
 # Create your views here.
 
@@ -71,12 +72,17 @@ def sensor_form(request, pk=None):
 
     if form.is_valid():
         form.save()
+        if pk:
+            messages.success(request, "Sensor modified successfully")
+        else:
+            messages.success(request, "Sensor added successfully")
         return HttpResponseRedirect(resolve_url('velogest:list'))
     return render(request, 'sensor_form.html', {'form': form})
 
 
-class DeleteSensor(DeleteView):
+class DeleteSensor(SuccessMessageMixin, DeleteView):
     model = Sensor
     template_name = "sensor_delete.html"
     # success_url = "/"
     success_url = reverse_lazy('velogest:list')
+    success_message = "Sensor is successfully deleted."
