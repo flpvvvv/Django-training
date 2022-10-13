@@ -19,6 +19,7 @@ from velogest.views import home
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('accounts/', include('django.contrib.auth.urls')),
     path('', home, name="home"),
     path('velogest/', include('velogest.urls')),
 ]

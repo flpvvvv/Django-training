@@ -8,7 +8,7 @@ from django.shortcuts import resolve_url
 from django.views.generic import DeleteView
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
-
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 
@@ -21,7 +21,7 @@ def velogest_home(request):
     # return HttpResponse("Velogest home page")
     return HttpResponseRedirect(resolve_url('velogest:list'))
 
-
+@login_required
 def sensor_list(request):
     sensors = Sensor.objects.all()
     form = FilterForm(request.GET or None)
