@@ -1,3 +1,4 @@
+from datetime import date
 from django.db import models
 
 
@@ -42,9 +43,20 @@ class Sensor(CommonInfo):
         return self.name
 
 
+class CurrentCampaignManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(
+            start_day__lte=date.today(),
+            end_day__gte=date.today(),
+        )
+
+
 class Campaign(CommonInfo):
     start_day = models.DateField()
     end_day = models.DateField()
+
+    objects = models.Manager()
+    current_campaign_manager = CurrentCampaignManager()
 
 
 class OrderedByLatitudeType1Sensor(Sensor):
