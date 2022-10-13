@@ -10,6 +10,8 @@
     <dd>{{ campaign.start_day }}</dd>
     <dt>End Day</dt>
     <dd>{{ campaign.end_day }}</dd>
+    <dt>Created at</dt>
+    <dd>{{ campaign.created_at }}</dd>
 </dl>
 
 <a href="{% url 'velogest:modify_campaign' pk=campaign.id %}" class="btn btn-primary">Modify</a>

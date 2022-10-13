@@ -43,3 +43,9 @@ class CampaignForm(forms.ModelForm):
     class Meta:
         model = Campaign
         fields = '__all__'
+
+    def clean(self):
+        data = super().clean()
+        if data["start_day"] > data["end_day"]:
+            self.add_error("end_day", ValidationError(
+                "End day should be later than start day !", code="invalid"))

@@ -1,12 +1,18 @@
 from django.db import models
 
-# Create your models here.
+
+class CommonInfo(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    modified_at = models.DateTimeField(auto_now=True, null=True, blank=True)
+
+    class Meta:
+        abstract = True
 
 
-class Sensor(models.Model):
+class Sensor(CommonInfo):
     name = models.CharField(max_length=150)
-    created_at = models.DateTimeField(auto_now_add=True)
-    modified_at = models.DateTimeField(auto_now=True)
+    # created_at = models.DateTimeField(auto_now_add=True)
+    # modified_at = models.DateTimeField(auto_now=True)
     latitude = models.FloatField()
     longitude = models.FloatField()
     type = models.CharField(
@@ -28,6 +34,6 @@ class Sensor(models.Model):
         return self.name
 
 
-class Campaign(models.Model):
+class Campaign(CommonInfo):
     start_day = models.DateField()
     end_day = models.DateField()
