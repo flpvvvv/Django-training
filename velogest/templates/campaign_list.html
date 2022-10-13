@@ -7,8 +7,7 @@
 {% if campaigns %}
 <ul>
     {% for campaign in campaigns %}
-    <li><a href="{% url 'velogest:campaign_id' pk=campaign.id %}">{{ campaign }}: {{ campaign.start_day }} - {{
-            campaign.end_day }}</a></li>
+    <li><a href="{% url 'velogest:campaign_id' pk=campaign.id %}">{{ campaign }}: {{ campaign.start_day }} - {{ campaign.end_day }}</a></li>
     {% endfor %}
 </ul>
 {% else %}
