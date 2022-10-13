@@ -66,3 +66,12 @@ class OrderedByLatitudeType1Sensor(Sensor):
     class Meta:
         proxy = True
         ordering = ['latitude']
+
+
+class Observation(models.Model):
+    record_time = models.DateTimeField()
+    record_number = models.IntegerField()
+
+    sensor = models.ForeignKey(
+        'velogest.Sensor', related_name='sensor', on_delete=models.SET_NULL, null=True, blank=True
+    )
