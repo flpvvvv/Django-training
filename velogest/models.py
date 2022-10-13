@@ -9,6 +9,11 @@ class CommonInfo(models.Model):
         abstract = True
 
 
+class Type1SensorManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(type='T1')
+
+
 class Sensor(CommonInfo):
     name = models.CharField(max_length=150)
     # created_at = models.DateTimeField(auto_now_add=True)
@@ -30,6 +35,9 @@ class Sensor(CommonInfo):
         'velogest.Campaign', related_name='campaign', on_delete=models.SET_NULL, null=True, blank=True
     )
 
+    objects = models.Manager()
+    type1_sensors = Type1SensorManager()
+
     def __str__(self):
         return self.name
 
@@ -37,3 +45,11 @@ class Sensor(CommonInfo):
 class Campaign(CommonInfo):
     start_day = models.DateField()
     end_day = models.DateField()
+
+
+class OrderedByLatitudeType1Sensor(Sensor):
+    objects = Sensor.type1_sensors
+
+    class Meta:
+        proxy = True
+        ordering = ['latitude']
