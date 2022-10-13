@@ -36,8 +36,8 @@ class Sensor(CommonInfo):
         'velogest.Campaign', related_name='campaign', on_delete=models.SET_NULL, null=True, blank=True
     )
 
-    objects = models.Manager()
-    type1_sensors = Type1SensorManager()
+    # objects = models.Manager()
+    # type1_sensors = Type1SensorManager()
 
     def __str__(self):
         return self.name
@@ -60,7 +60,8 @@ class Campaign(CommonInfo):
 
 
 class OrderedByLatitudeType1Sensor(Sensor):
-    objects = Sensor.type1_sensors
+    # objects = Sensor.type1_sensors
+    objects = Type1SensorManager()
 
     class Meta:
         proxy = True
