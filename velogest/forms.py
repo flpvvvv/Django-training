@@ -32,3 +32,9 @@ class FilterForm(forms.Form):
     owners = forms.ModelChoiceField(User.objects.all(), required=False)
     created_at_after = forms.DateField(required=False)
     created_at_before = forms.DateField(required=False)
+
+
+class CampaignForm(forms.ModelForm):
+    class Meta:
+        model = Campaign
+        fields = '__all__'

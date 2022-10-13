@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load bootstrap5 %}
+{% block page_title %}Campaign List{% endblock %}
+
+
+{% block content %}
+{% if campaigns %}
+<ul>
+    {% for campaign in campaigns %}
+    <li><a href="{% url 'velogest:campaign_id' pk=campaign.id %}">{{ campaign }}</a></li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>No campaigns !</p>
+{% endif %}
+
+{% endblock content %}

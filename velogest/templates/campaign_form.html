@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% load bootstrap5 %}
+
+{% block page_title %}
+{% if form.instance.pk %}
+    Modify campaign {{ form.instance.name }}
+{% else %}
+    Add campaign
+{% endif %}
+{% endblock %}
+
+
+{% block content %}
+
+<form action="" method="post">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% buttons %}
+    <button type="submit" class="btn btn-primary">Submit</button>
+    {% endbuttons %}
+</form>
+
+<a href="{% url 'velogest:campaign_list' %}">Go back to campaign list</a>
+
+{% endblock content %}

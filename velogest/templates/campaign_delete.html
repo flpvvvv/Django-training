@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block page_title %}Delete Campaign : {{ sensor.id }} {%endblock %}
+
+{% block content %}
+
+<form method="post">{% csrf_token %}
+    <p>Are you sure you want to delete "{{ campaign }}"?</p>
+    {{ form }}
+    <button type="submit" class="btn btn-danger">Confirm</button>
+</form>
+
+<a href="{% url 'velogest:campaign_list' %}">Go back to campaign list</a>
+
+{% endblock content %}

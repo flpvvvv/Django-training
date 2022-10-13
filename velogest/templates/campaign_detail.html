@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block page_title %}Campaign : {{ campaign.id }} {%endblock %}
+
+{% block content %}
+<dl>
+    <dt>ID</dt>
+    <dd>{{ campaign.id }}</dd>
+    <dt>Start Day</dt>
+    <dd>{{ campaign.start_day }}</dd>
+    <dt>End Day</dt>
+    <dd>{{ campaign.end_day }}</dd>
+</dl>
+
+<a href="{% url 'velogest:modify_campaign' pk=campaign.id %}" class="btn btn-primary">Modify</a>
+<a href="{% url 'velogest:delete_campaign' pk=campaign.id %}" class="btn btn-danger">Delete</a>
+<br>
+<br>
+<a href="{% url 'velogest:campaign_list' %}">Go back to campaign list</a>
+
+{% endblock content %}
