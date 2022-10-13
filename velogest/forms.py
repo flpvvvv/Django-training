@@ -1,4 +1,5 @@
 
+from datetime import date
 from django import forms
 
 from velogest.models import Sensor, Campaign
@@ -14,6 +15,10 @@ class SensorForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["name"].initial = "sensor"
+        self.fields['campaign'].queryset = Campaign.objects.filter(
+            start_day__lte=date.today(),
+            end_day__gte=date.today(),
+        )
 
     # Valide input
     def clean(self):
