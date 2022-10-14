@@ -22,4 +22,5 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('', home, name="home"),
     path('velogest/', include('velogest.urls')),
+    path('hijack/', include('hijack.urls')),
 ]

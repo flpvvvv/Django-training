@@ -11,7 +11,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth.decorators import permission_required
-from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin, UserPassesTestMixin
 
 
 def home(request):
@@ -69,6 +69,10 @@ class SensorView(View):
 def sensor_form(request, pk=None):
     if pk:
         sensor = Sensor.objects.get(pk=pk)
+        # user_li = sensor.owners.all().values_list('username', flat=True)
+        # if str(request.user) not in user_li:
+        if not request.user.is_superuser and request.user not in sensor.owners.all():
+            raise PermissionDenied("Permission Denied")
     else:
         sensor = None
     form = SensorForm(request.POST or None, instance=sensor)
@@ -83,12 +87,15 @@ def sensor_form(request, pk=None):
     return render(request, 'sensor_form.html', {'form': form})
 
 
-class DeleteSensor(SuccessMessageMixin, DeleteView):
+class DeleteSensor(UserPassesTestMixin, SuccessMessageMixin, DeleteView):
     model = Sensor
     template_name = "sensor_delete.html"
     # success_url = "/"
     success_url = reverse_lazy('velogest:list')
     success_message = "Sensor is successfully deleted."
+
+    def test_func(self):
+        return self.request.user.is_superuser or self.request.user in self.get_object().owners.all()
 
 
 @permission_required('velogest.add_campaign', raise_exception=True)

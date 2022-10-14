@@ -13,9 +13,12 @@
     <dt>Created at</dt>
     <dd>{{ campaign.created_at }}</dd>
 </dl>
-
-<a href="{% url 'velogest:modify_campaign' pk=campaign.id %}" class="btn btn-primary">Modify</a>
-<a href="{% url 'velogest:delete_campaign' pk=campaign.id %}" class="btn btn-danger">Delete</a>
+{% if perms.velogest.change_campaign %}
+    <a href="{% url 'velogest:modify_campaign' pk=campaign.id %}" class="btn btn-primary">Modify</a>
+{% endif %}
+{% if perms.velogest.delete_campaign %}
+    <a href="{% url 'velogest:delete_campaign' pk=campaign.id %}" class="btn btn-danger">Delete</a>
+{% endif %}
 <br>
 <br>
 <a href="{% url 'velogest:campaign_list' %}">Go back to campaign list</a>

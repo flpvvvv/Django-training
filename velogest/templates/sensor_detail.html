@@ -15,9 +15,10 @@
     <dt>Campaign</dt>
     <dd>{{ sensor.campaign }}: {{ sensor.campaign.start_day }} - {{ sensor.campaign.end_day }}</dd>
 </dl>
-
-<a href="{% url 'velogest:modify_sensor' pk=sensor.id %}" class="btn btn-primary">Modify</a>
-<a href="{% url 'velogest:delete_sensor' pk=sensor.id %}" class="btn btn-danger">Delete</a>
+{% if user.is_superuser or user in sensor.owners.all %}
+    <a href="{% url 'velogest:modify_sensor' pk=sensor.id %}" class="btn btn-primary">Modify</a>
+    <a href="{% url 'velogest:delete_sensor' pk=sensor.id %}" class="btn btn-danger">Delete</a>
+{% endif %}
 <br>
 <br>
 <a href="{% url 'velogest:list' %}">Go back to sensor list</a>
