@@ -36,24 +36,30 @@ class Command(BaseCommand):
             return
 
         if add_sensor:
+            count_added_sensor = 0
             df_sensors = df.drop_duplicates(subset=['libelle'], keep='last')
             for _, row in tqdm(df_sensors.iterrows(), total=df_sensors.shape[0], desc="Adding sensors"):
-                Sensor.objects.get_or_create(
+                _, created = Sensor.objects.get_or_create(
                     name=row["libelle"],
                     latitude=row["latitude"],
                     longitude=row["longitude"],
                 )
+            if created:
+                count_added_sensor += 1
+            self.stdout.write(self.style.SUCCESS(
+                f'{count_added_sensor} sensors added.'))
 
         if add_observation:
-            df_sample = df.sample(1000, random_state=123)
-            for _, row in tqdm(df_sample.iterrows(), total=df_sample.shape[0], desc="Adding observations"):
-                Observation.objects.get_or_create(
-                    sensor=Sensor.objects.get(name=row["libelle"]),
+            Observation.objects.all().delete()
+            sensor_dict = dict(Sensor.objects.all().values_list('name', 'id'))
+            obs_to_create = []
+            for _, row in tqdm(df.iterrows(), total=df.shape[0], desc="Adding observations"):
+                obs_to_create.append(Observation(
+                    sensor_id=sensor_dict[row["libelle"]],
                     record_time=row["Date et heure de comptage"],
                     record_number=row["comptage_5m"],
-                )
+                ))
 
-        # Traitements
-        # if something_wrong:
-        #     raise CommandError("Something went wrong")
-        # self.stdout.write(self.style.SUCCESS('Command ended'))
+            Observation.objects.bulk_create(obs_to_create)
+            self.stdout.write(self.style.SUCCESS(
+                f'{len(obs_to_create)} observations added.'))
