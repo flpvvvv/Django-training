@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static %}
+{% block page_title %}Dashboard{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'dashboard.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+
+<p>
+    <label>Select a sensor: </label>
+    <select class="form-control">
+        <option value="">------</option>
+        {% for sensor in sensors %}
+        <option value="{{ sensor.pk }}">{{ sensor.name }}</option>
+        {% endfor %}
+    </select>
+</p>
+
+
+{% endblock content %}

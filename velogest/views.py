@@ -1,8 +1,8 @@
-from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import View
-from velogest.models import Sensor, Campaign
+from velogest.models import Observation, Sensor, Campaign
 from velogest.forms import SensorForm, FilterForm, CampaignForm
 from django.shortcuts import resolve_url
 from django.views.generic import DeleteView
@@ -12,16 +12,17 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.mixins import PermissionRequiredMixin, UserPassesTestMixin
+import json
 
 
 def home(request):
     # return HttpResponse("Home page")
-    return HttpResponseRedirect(resolve_url('velogest:list'))
+    return HttpResponseRedirect(resolve_url('velogest:dashboard'))
 
 
 def velogest_home(request):
     # return HttpResponse("Velogest home page")
-    return HttpResponseRedirect(resolve_url('velogest:list'))
+    return HttpResponseRedirect(resolve_url('velogest:dashboard'))
 
 
 @login_required
@@ -146,3 +147,26 @@ class DeleteCampaign(PermissionRequiredMixin, SuccessMessageMixin, DeleteView):
     success_url = reverse_lazy('velogest:campaign_list')
     success_message = "Campaign is successfully deleted."
     permission_required = 'velogest.delete_campaign'
+
+
+def dashboard(request):
+    sensors = Sensor.objects.all()
+
+    context = {
+        "sensors": sensors,
+    }
+
+    return render(request, 'dashboard.html', context)
+
+
+def observations_ajax(request):
+    sensor_id = request.GET.get("sensor_id")
+    if not sensor_id:
+        return HttpResponse(status=400)
+    observations = Observation.objects.filter(
+        sensor_id=sensor_id).values_list('record_time', 'record_number')
+    values = {
+        'dates': [obs[0] for obs in observations],
+        'comptes': [obs[1] for obs in observations],
+    }
+    return JsonResponse(values)

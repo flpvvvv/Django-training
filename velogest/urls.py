@@ -1,9 +1,11 @@
 from django.urls import path
-from velogest.views import velogest_home, sensor_list, SensorView, DeleteSensor, sensor_form, campaign_list, campaign_form, DeleteCampaign, CampaignView
+from velogest.views import velogest_home, sensor_list, SensorView, DeleteSensor, sensor_form, campaign_list, campaign_form, DeleteCampaign, CampaignView, dashboard, observations_ajax
 
 app_name = 'velogest'
 urlpatterns = [
     path('', velogest_home, name="home"),
+    path('dashboard', dashboard, name="dashboard"),
+    path('observations', observations_ajax, name="observations"),
     path('sensor/list', sensor_list, name="list"),
     path('sensor/<int:pk>', SensorView.as_view(), name="sensor_id"),
     path('sensor/<int:pk>/modify', sensor_form, name="modify_sensor"),
