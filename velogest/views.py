@@ -9,7 +9,9 @@ from django.views.generic import DeleteView
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.decorators import login_required
-# Create your views here.
+from django.core.exceptions import PermissionDenied
+from django.contrib.auth.decorators import permission_required
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 
 def home(request):
@@ -20,6 +22,7 @@ def home(request):
 def velogest_home(request):
     # return HttpResponse("Velogest home page")
     return HttpResponseRedirect(resolve_url('velogest:list'))
+
 
 @login_required
 def sensor_list(request):
@@ -88,7 +91,11 @@ class DeleteSensor(SuccessMessageMixin, DeleteView):
     success_message = "Sensor is successfully deleted."
 
 
+@permission_required('velogest.add_campaign', raise_exception=True)
 def campaign_form(request, pk=None):
+    if pk and not request.user.has_perm('velogest.change_campaign'):
+        raise PermissionDenied("Permission Denied")
+
     if pk:
         campaign = Campaign.objects.get(pk=pk)
     else:
@@ -125,9 +132,10 @@ class CampaignView(View):
         return render(request, 'campaign_detail.html', context)
 
 
-class DeleteCampaign(SuccessMessageMixin, DeleteView):
+class DeleteCampaign(PermissionRequiredMixin, SuccessMessageMixin, DeleteView):
     model = Campaign
     template_name = "campaign_delete.html"
     # success_url = "/"
     success_url = reverse_lazy('velogest:campaign_list')
     success_message = "Campaign is successfully deleted."
+    permission_required = 'velogest.delete_campaign'
