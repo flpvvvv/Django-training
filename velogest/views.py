@@ -164,7 +164,7 @@ def observations_ajax(request):
     if not sensor_id:
         return HttpResponse(status=400)
     observations = Observation.objects.filter(
-        sensor_id=sensor_id).values_list('record_time', 'record_number')
+        sensor_id=sensor_id).order_by('record_time').values_list('record_time', 'record_number')
     values = {
         'dates': [obs[0] for obs in observations],
         'comptes': [obs[1] for obs in observations],

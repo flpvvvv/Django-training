@@ -3,20 +3,21 @@
 {% block page_title %}Dashboard{% endblock %}
 
 {% block extra_js %}
-    <script src="{% static 'dashboard.js' %}"></script>
+<script src="{% static 'plotly-2.14.0.min.js' %}"></script>
+<script src="{% static 'dashboard.js' %}"></script>
 {% endblock %}
 
 {% block content %}
 
 <p>
     <label>Select a sensor: </label>
-    <select class="form-control">
+    <select class="form-control" id="sensor-id">
         <option value="">------</option>
         {% for sensor in sensors %}
         <option value="{{ sensor.pk }}">{{ sensor.name }}</option>
         {% endfor %}
     </select>
 </p>
-
+<div id="chart"></div>
 
 {% endblock content %}

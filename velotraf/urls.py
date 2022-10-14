@@ -25,4 +25,4 @@ urlpatterns = [
     path('velogest/', include('velogest.urls')),
     path('hijack/', include('hijack.urls')),
 ]
-urlpatterns += staticfiles_urlpatterns()
+# urlpatterns += staticfiles_urlpatterns()
