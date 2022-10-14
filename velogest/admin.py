@@ -14,7 +14,7 @@ class CampaignAdmin(admin.ModelAdmin):
     list_display = ['start_day', 'end_day']
 
 class ObservationAdmin(admin.ModelAdmin):
-    list_display = ['record_time', 'record_number', 'sensor']
+    list_display = ['sensor', 'record_time', 'record_number']
 
 
 admin.site.register(Sensor, SensorAdmin)
